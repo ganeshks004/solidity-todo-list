@@ -1,0 +1,40 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract TodoList {
+
+    // Struct to store each task
+    struct Task {
+        string description;
+        bool completed;
+    }
+
+    // Dynamic array of all tasks
+    Task[] public tasks;
+
+    // Add a new task
+    function addTask(string memory _description) public {
+        tasks.push(Task({
+            description: _description,
+            completed: false
+        }));
+    }
+
+    // Mark a task completed
+    function completeTask(uint _taskIndex) public {
+        require(_taskIndex < tasks.length, "Invalid task index");
+        tasks[_taskIndex].completed = true;
+    }
+
+    // Get specific task details
+    function getTask(uint _taskIndex) public view returns (string memory, bool) {
+        require(_taskIndex < tasks.length, "Invalid task index");
+        Task memory task = tasks[_taskIndex];
+        return (task.description, task.completed);
+    }
+
+    // Get total number of tasks
+    function getTaskCount() public view returns (uint) {
+        return tasks.length;
+    }
+}
