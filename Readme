@@ -1,0 +1,58 @@
+# Simple Solidity To-Do List Smart Contract
+
+
+batch 8 
+THARUN H K 1DT23IC054
+GANESH K S 1DT23IC009
+NANDISH C  1DT23IC021
+SHREYAS M  1DT23IC049
+
+This repository contains a beginner-friendly Solidity smart contract built to understand how Remix IDE and basic Ethereum smart contract interactions work.
+
+## 📌 Features
+- Add new tasks  
+- Mark tasks as completed  
+- View task details  
+- Get total number of tasks  
+- Stores tasks using Structs and dynamic arrays  
+- Very easy to deploy on Remix IDE
+
+---
+
+## 🧩 Smart Contract Used (TodoList.sol)
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract TodoList {
+
+    struct Task {
+        string description;
+        bool completed;
+    }
+
+    Task[] public tasks;
+
+    function addTask(string memory _description) public {
+        tasks.push(Task({
+            description: _description,
+            completed: false
+        }));
+    }
+
+    function completeTask(uint _taskIndex) public {
+        require(_taskIndex < tasks.length, "Invalid task index");
+        tasks[_taskIndex].completed = true;
+    }
+
+    function getTask(uint _taskIndex) public view returns (string memory, bool) {
+        require(_taskIndex < tasks.length, "Invalid task index");
+        Task memory task = tasks[_taskIndex];
+        return (task.description, task.completed);
+    }
+
+    function getTaskCount() public view returns (uint) {
+        return tasks.length;
+    }
+}
